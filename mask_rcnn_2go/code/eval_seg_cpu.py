@@ -70,7 +70,7 @@ def parse_args():
 
 def load_model(args):
     net, _ = model_utils.load_model_pb(
-        args.net, args.init_net, is_run_init=True, is_create_net=True
+        args.net, args.init_net
     )
     return net
 
