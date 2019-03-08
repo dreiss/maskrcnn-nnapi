@@ -35,6 +35,14 @@ def run_single_segms(
         pixel_stds=pixel_stds,
     )
     for k, v in inputs.items():
+        if k == "im_info":
+            v = v.copy()
+            #v[:,2] = 1.0
+            scale = v[0][2]
+            im_info2 = v[:,:2].copy()
+            workspace.FeedBlob(core.ScopedName("im_info2"), im_info2)
+            im_infoq = np.rint(im_info2 * 8.0).astype(np.uint16)
+            workspace.FeedBlob(core.ScopedName("im_infoq"), im_infoq)
         workspace.FeedBlob(core.ScopedName(k), v)
 
     try:
@@ -43,6 +51,9 @@ def run_single_segms(
         scores = workspace.FetchBlob("score_nms")  # bbox scores, (R, )
         boxes = workspace.FetchBlob("bbox_nms")  # i.e., boxes, (R, 4*1)
         masks = workspace.FetchBlob("mask_fcn_probs")  # (R, cls, mask_dim, mask_dim)
+        if boxes.dtype == np.uint16:
+            boxes = boxes.astype(np.float32) * 0.125
+            boxes /= scale
     except Exception as e:
         print(e)
         # may not detect anything at all
