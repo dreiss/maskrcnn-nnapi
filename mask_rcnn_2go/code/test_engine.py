@@ -10,6 +10,7 @@ def empty_results(num_classes, num_images):
     #    (x1, y1, x2, y2, score)
     ret = {"all_boxes": [[[] for _ in range(num_images)] for _ in range(num_classes)]}
     ret["all_segms"] = [[[] for _ in range(num_images)] for _ in range(num_classes)]
+    ret["all_keyps"] = [[[] for _ in range(num_images)] for _ in range(num_classes)]
     return ret
 
 
