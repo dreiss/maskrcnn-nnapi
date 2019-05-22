@@ -134,9 +134,10 @@ def eval_kpts_cpu(args, net):
             target_min_size=args.min_size,
             target_max_size=args.max_size,
         )
-        boxes, xy_preds, classids = ret
-        extend_results(i, all_boxes, [[], boxes])
-        extend_results(i, all_keyps, [[], xy_preds])
+        if ret:
+            boxes, xy_preds, classids = ret
+            extend_results(i, all_boxes, [[], boxes])
+            extend_results(i, all_keyps, [[], xy_preds])
 
     if not os.path.exists(args.output_dir):
         os.makedirs(args.output_dir)
