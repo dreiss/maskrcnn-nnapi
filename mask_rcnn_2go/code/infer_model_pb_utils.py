@@ -160,6 +160,9 @@ def run_single_kpts(
         pixel_stds=pixel_stds,
     )
 
+    if inputs["data"].shape != (1,3,320,320):
+        return None
+
     # Prepare inputs for AABB and Int8AABB operators
     im_info = inputs["im_info"]
     scale = im_info[0][2]
