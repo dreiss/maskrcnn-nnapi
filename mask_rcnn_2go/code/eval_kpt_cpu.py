@@ -123,6 +123,9 @@ def eval_kpts_cpu(args, net):
         # Uncomment to only push the street corner image
         #if entry["id"] != 8211:
         #    continue
+        # Uncomment to only push the pizza party image
+        #if entry["id"] != 292446:
+        #    continue
         #print()
         #print(entry["image"])
         #print()
